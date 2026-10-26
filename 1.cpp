@@ -1,37 +1,58 @@
-// to find the max sum in a subarray of 2 elements out of a one single array
-#include <iostream>
-#include <algorithm>
-using namespace std;
+Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
 
-int ktar(int arr[], int n) {
-    int low = 0;
-    int high = 1;
-    int sum = 0;
-    
-    for (int i = low; i <= high; i++) {
-        sum = sum + arr[i];
-    }
+Note that after backspacing an empty text, the text will continue empty.
 
-    int res = sum;
+ 
 
-    while (high < n) {
-        res = max(res, sum);
-        low++;
-        high++;
-        
-        if (high == n) {
-            break;
+Example 1:
+
+Input: s = "ab#c", t = "ad#c"
+Output: true
+Explanation: Both s and t become "ac".
+Example 2:
+
+Input: s = "ab##", t = "c#d#"
+Output: true
+Explanation: Both s and t become "".
+Example 3:
+
+Input: s = "a#c", t = "b"                                                                                    
+Output: false
+Explanation: s becomes "c" while t becomes "b".
+ 
+
+Constraints:
+
+1 <= s.length, t.length <= 200
+s and t only contain lowercase letters and '#' characters.
+ 
+
+Follow up: Can you solve it in O(n) time and O(1) space?
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        string res1 = "";
+        for(char c : s) {
+            if(c != '#') {
+                res1.push_back(c);
+            } else if(!res1.empty()) {
+                res1.pop_back();
+            }
         }
         
-        sum = sum - arr[low - 1];
-        sum = sum + arr[high];
+        string res2 = "";
+        for(char c : t) {
+            if(c != '#') {
+                res2.push_back(c);
+            } else if(!res2.empty()) {
+                res2.pop_back();
+            }
+        }
+        
+        if(res1 == res2) {
+            return true;
+        } else {
+            return false;
+        }
     }
-    
-    return res;
-}
-
-int main() {
-    int arr[4] = {23, 54, 45, 4};
-    cout << ktar(arr, 4);
-    return 0;
-}
+};
