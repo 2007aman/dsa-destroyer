@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+// problem link -> https://leetcode.com/problems/minimum-window-substring/description/?envType=study-plan-v2&envId=top-interview-150
 using namespace std;
 public:
 bool fun(vector<int> &have, vector<int> &need)
