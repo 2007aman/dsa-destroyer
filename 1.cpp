@@ -1,58 +1,35 @@
-Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
-
-Note that after backspacing an empty text, the text will continue empty.
-
- 
-
-Example 1:
-
-Input: s = "ab#c", t = "ad#c"
-Output: true
-Explanation: Both s and t become "ac".
-Example 2:
-
-Input: s = "ab##", t = "c#d#"
-Output: true
-Explanation: Both s and t become "".
-Example 3:
-
-Input: s = "a#c", t = "b"                                                                                    
-Output: false
-Explanation: s becomes "c" while t becomes "b".
- 
-
-Constraints:
-
-1 <= s.length, t.length <= 200
-s and t only contain lowercase letters and '#' characters.
- 
-
-Follow up: Can you solve it in O(n) time and O(1) space?
+//https://leetcode.com/problems/linked-list-cycle-ii/description/
 class Solution {
 public:
-    bool backspaceCompare(string s, string t) {
-        string res1 = "";
-        for(char c : s) {
-            if(c != '#') {
-                res1.push_back(c);
-            } else if(!res1.empty()) {
-                res1.pop_back();
+    ListNode *detectCycle(ListNode *head) {
+        if (head == nullptr || head->next == nullptr) {
+            return nullptr;
+        }
+        
+        ListNode *slow = head;
+        ListNode *fast = head;
+        bool isCyclePresent = false;
+        
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+            
+            if (slow == fast) {
+                isCyclePresent = true;
+                break;
             }
         }
         
-        string res2 = "";
-        for(char c : t) {
-            if(c != '#') {
-                res2.push_back(c);
-            } else if(!res2.empty()) {
-                res2.pop_back();
-            }
+        if (!isCyclePresent) {
+            return nullptr;
         }
         
-        if(res1 == res2) {
-            return true;
-        } else {
-            return false;
+        slow = head;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
         }
+        
+        return slow;
     }
 };
