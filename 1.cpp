@@ -1,35 +1,26 @@
-//https://leetcode.com/problems/linked-list-cycle-ii/description/
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
-        if (head == nullptr || head->next == nullptr) {
-            return nullptr;
-        }
-        
-        ListNode *slow = head;
-        ListNode *fast = head;
-        bool isCyclePresent = false;
-        
-        while (fast != nullptr && fast->next != nullptr) {
-            slow = slow->next;
-            fast = fast->next->next;
-            
-            if (slow == fast) {
-                isCyclePresent = true;
-                break;
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* temp = head;
+        while (temp != nullptr && temp->next != nullptr) {
+            if (temp->next->val == temp->val) {
+                ListNode* toRemove = temp->next;
+                temp->next = temp->next->next;
+                delete toRemove;
+            } else {
+                temp = temp->next;
             }
         }
-        
-        if (!isCyclePresent) {
-            return nullptr;
-        }
-        
-        slow = head;
-        while (slow != fast) {
-            slow = slow->next;
-            fast = fast->next;
-        }
-        
-        return slow;
+        return head;
     }
 };
